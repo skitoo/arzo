@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form method="post" action="">
+    {{ form.csrf_token }}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-info">
+                <div class="box-header">
+                    <h3 class="box-title">Informations générales</h3>
+                </div>
+                <div class="box-body">
+                    <div class="form-group">
+                        {{form.name.label}}
+                        {{form.name(class_="form-control")}}
+                    </div>
+                    <div class="form-group">
+                        {{form.description.label}}
+                        {{form.description(class_="form-control")}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="box box-info">
+                <div class="box-header">
+                    <h3 class="box-title">Position</h3>
+                </div>
+                <div class="box-body">
+                    <div class="form-group">
+                        {{form.altitude.label}}
+                        {{form.altitude(class_="form-control")}}
+                    </div>
+                    <div class="form-group">
+                        {{form.latitude.label}}
+                        {{form.latitude(class_="form-control")}}
+                    </div>
+                    <div class="form-group">
+                        {{form.longitude.label}}
+                        {{form.longitude(class_="form-control")}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-primary" type="submit">Valider</button>
+</form>
+{% endblock %}
