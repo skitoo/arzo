@@ -2,7 +2,7 @@
 
 from __future__ import division
 
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, flash
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.wtf import Form
 from wtforms_alchemy import model_form_factory
@@ -31,11 +31,11 @@ class Observatory(db.Model):
     name = db.Column(db.String(80), nullable=False, info={'label': 'Nom'})
     description = db.Column(db.Text, info={'label': 'Description'})
     altitude = db.Column(db.Integer, info={'label': 'Altitude', 'info': 'En mètre'})
-    longitude = db.Column(db.Float, info={'label': 'Longitude'})
-    latitude = db.Column(db.Float, info={'label': 'Latitude'})
+    longitude = db.Column(db.Float, nullable=False, info={'label': 'Longitude'})
+    latitude = db.Column(db.Float, nullable=False, info={'label': 'Latitude'})
     create_at = db.Column(db.DateTime, default=datetime.utcnow)
     update_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
-    selected = db.Column(db.Boolean)
+    selected = db.Column(db.Boolean, nullable=False, default=False, info={'label': u'Sélectionner'})
 
     def __str__(self):
         return '<Observatory #%d - %s>' % (self.id, self.name)
@@ -163,6 +163,7 @@ def observatory(observatory_id):
         form.populate_obj(observatory)
         db.session.merge(observatory)
         db.session.commit()
+        flash(u'Observatoire sauvegardé avec succès', 'success')
     return render_template(
         'edit_observatory.html',
         form=form,
@@ -183,6 +184,7 @@ def new_observatory():
         form.populate_obj(observatory)
         db.session.add(observatory)
         db.session.commit()
+        flash(u'Observatoire sauvegardé avec succès', 'success')
         return redirect(url_for('observatories'))
     return render_template(
         'edit_observatory.html',
@@ -196,9 +198,13 @@ def new_observatory():
     )
 
 
-@app.route('/delete-observatory', methods=('POST'))
+@app.route('/observatory/<int:observatory_id>/delete')
 def delete_observatory(observatory_id):
-    return ''
+    observatory = Observatory.query.get_or_404(observatory_id)
+    db.session.delete(observatory)
+    db.session.commit()
+    flash(u'Observatoire supprimé avec succès', 'success')
+    return redirect(url_for('observatories'))
 
 
 if __name__ == '__main__':
