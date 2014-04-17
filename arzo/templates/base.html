@@ -4,6 +4,8 @@
         <meta charset="UTF-8">
         <title>Arzo{% block title %}{% if title %} - {{title}}{% endif %}{% endblock %}</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+
+        {% block styles %}
         <!-- bootstrap 3.0.2 -->
         <link href="{{url_for('static', filename="css/bootstrap.min.css")}}" rel="stylesheet" type="text/css" />
         <!-- font Awesome -->
@@ -12,7 +14,7 @@
         <link href="{{url_for('static', filename="css/ionicons.min.css")}}" rel="stylesheet" type="text/css" />
         <!-- Theme style -->
         <link href="{{url_for('static', filename="css/AdminLTE.css")}}" rel="stylesheet" type="text/css" />
-
+        {% endblock %}
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>

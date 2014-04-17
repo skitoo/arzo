@@ -1,8 +1,8 @@
-{% extends "base.html" %}
+{% extends "base_observatory.html" %}
 
 {% block content %}
 {% if form.errors %}    
-    <div class="alert alert-warning alert-dismissable">
+    <div class="alert alert-danger alert-dismissable">
         <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
         <ul>
         {% for error in form.errors %}
@@ -53,6 +53,14 @@
                         {{form.longitude.label}}
                         {{form.longitude(class_="form-control")}}
                     </div>
+                </div>
+            </div>
+            <div class="box box-info">
+                <div class="box-header">
+                    <h3 class="box-title">Carte</h3>
+                </div>
+                <div class="box-body">
+                    <div id="map" style="height:300px;"></div>
                 </div>
             </div>
         </div>
