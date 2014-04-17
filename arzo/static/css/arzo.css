@@ -1,0 +1,28 @@
+
+
+
+#weather {
+    font-size: 10em;
+    margin-top: -40px;
+    height: 190px;
+    text-align: center;
+}
+
+#weather-description{
+    font-size: 2em;
+}
+
+#map{
+    margin-bottom: 10px;
+}
+
+.weather-infos{
+    font-size: 1.2em;
+    line-height: 1.2em;
+    margin:15px 0;
+}
+
+.weather-infos-label{
+    display: inline-block;
+    margin-left: 10px;
+}

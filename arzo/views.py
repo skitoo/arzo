@@ -7,6 +7,7 @@ from arzo.forms import ObservatoryForm
 from arzo.settings import GOOGLE_API_KEY
 
 import requests
+import json
 
 
 @app.route('/')
@@ -102,3 +103,18 @@ def api_elevation():
         data = str(data['results'][0]['elevation'])
         cache.set('api_elevation#%s' % locations, data)
     return data
+
+
+@app.route('/api/weather')
+def api_weather():
+    lat, lon = request.args.get('latitude', ''), request.args.get('longitude', '')
+    response = requests.get('http://api.openweathermap.org/data/2.5/weather', params={'lat': lat, 'lon': lon, 'lang': 'fr'})
+    data = response.json()
+    data = {
+        'temp': '%.1f' % (data['main']['temp'] - 273.15),
+        'wind_speed': '%.2f' % (data['wind']['speed'] * 3.6),
+        'humidity': '%d' % (data['main']['humidity']),
+        'weather': data['weather'][0]['main'].lower(),
+        'description': data['weather'][0]['description'].title()
+    }
+    return json.dumps(data)

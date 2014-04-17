@@ -7,6 +7,7 @@
         var latitude = $('#latitude');
         var longitude = $('#longitude');
         var altitude = $('#altitude');
+        var temp = $('#temp');
 
         var lat = latitude.val() !== '' ? latitude.val() : 0;
         var lon = longitude.val() !== '' ? longitude.val() : 0;
@@ -16,6 +17,7 @@
         var ondragend = function() {
             updateLatitudeAndLongitude();
             updateAltitude();
+            updateWeather();
         };
 
         var updateLatitudeAndLongitude = function() {
@@ -37,6 +39,25 @@
             });
         };
 
+        var updateWeather = function() {
+            $.ajax('/api/weather', {
+                type: 'GET',
+                dataType: "json",
+                data: {
+                    latitude: latitude.val(),
+                    longitude: longitude.val()
+                },
+                success: function(data){
+                    $('#temp').html(data.temp + ' C°');
+                    $('#wind_speed').html(data.wind_speed + ' km/h');
+                    $('#weather-description').html(data.description);
+                    $('#humidity').html(data.humidity + ' %');
+                    $('#weather').removeClass();
+                    $('#weather').addClass('meteocon meteocon-' + data.weather);
+                }
+            });
+        };
+
         var map = L.mapbox.map('map', 'skitoo.map-2a0chld1').setView([lat, lon], zoom);
 
         var marker = L.marker([lat, lon], {
@@ -46,5 +67,6 @@
         marker.on('dragend', ondragend);
         // set the initial values in the form
         updateLatitudeAndLongitude();
+        updateWeather();
     });
 })(jQuery);
