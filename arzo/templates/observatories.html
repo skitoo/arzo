@@ -5,18 +5,20 @@
     <tr>
         <th style="width:20px;">#</th>
         <th style="width:50%;">Nom</th>
-        <th>Altitude</th>
-        <th>Latitude</th>
-        <th>Longitude</th>
+        <th class="text-center">Altitude</th>
+        <th class="text-center">Latitude</th>
+        <th class="text-center">Longitude</th>
+        <th class="text-center">Sélectionné</th>
         <th style="width:10%;" class="text-center">Actions</th>
     </tr>
     {% for observatory in observatories %}
         <tr>
             <td>{{loop.index}}</td>
             <td><a href="{{url_for('observatory', observatory_id=observatory.id)}}">{{observatory.name}}</a></td>
-            <th>{{observatory.altitude}} m</th>
-            <th>{{observatory.latitude}}</th>
-            <th>{{observatory.longitude}}</th>
+            <th class="text-center">{{observatory.altitude}} m</th>
+            <th class="text-center">{{observatory.latitude}}</th>
+            <th class="text-center">{{observatory.longitude}}</th>
+            <th class="text-center">{% if observatory.selected %}<i class="fa fa-star"></i>{% endif %}</th>
             <td class="text-center">
                 <a href="{{url_for('delete_observatory', observatory_id=observatory.id)}}" class="btn btn-danger btn-sm">
                     <i class="fa fa-trash-o"></i> <span>Supprimer</span>
