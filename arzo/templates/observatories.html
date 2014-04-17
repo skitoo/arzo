@@ -16,8 +16,8 @@
             <td>{{loop.index}}</td>
             <td><a href="{{url_for('observatory', observatory_id=observatory.id)}}">{{observatory.name}}</a></td>
             <th class="text-center">{{observatory.altitude}} m</th>
-            <th class="text-center">{{observatory.latitude}}</th>
-            <th class="text-center">{{observatory.longitude}}</th>
+            <th class="text-center">{{observatory.latitude|round(4)}}</th>
+            <th class="text-center">{{observatory.longitude|round(4)}}</th>
             <th class="text-center">{% if observatory.selected %}<i class="fa fa-star"></i>{% endif %}</th>
             <td class="text-center">
                 <a href="{{url_for('delete_observatory', observatory_id=observatory.id)}}" class="btn btn-danger btn-sm">
