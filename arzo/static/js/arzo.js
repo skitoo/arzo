@@ -14,10 +14,14 @@
 
 
         var ondragend = function() {
+            updateLatitudeAndLongitude();
+            updateAltitude();
+        };
+
+        var updateLatitudeAndLongitude = function() {
             var ll = marker.getLatLng();
             latitude.val(ll.lat);
             longitude.val(ll.lng);
-            updateAltitude();
         };
 
         var updateAltitude = function(){
@@ -41,6 +45,6 @@
 
         marker.on('dragend', ondragend);
         // set the initial values in the form
-        ondragend();
+        updateLatitudeAndLongitude();
     });
 })(jQuery);
