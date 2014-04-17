@@ -41,6 +41,7 @@ def observatory(observatory_id):
             Observatory.query.filter(Observatory.id != observatory.id).update({Observatory.selected: False})
         db.session.commit()
         flash(u'Observatoire sauvegardé avec succès', 'success')
+        return redirect(url_for('observatories'))
     return render_template(
         'edit_observatory.html',
         form=form,
