@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash, request
 from arzo import app, db
 from arzo.models import Observatory
 from arzo.forms import ObservatoryForm
+from arzo.settings import GOOGLE_API_KEY
+
+import requests
 
 
 @app.route('/')
@@ -85,3 +88,11 @@ def delete_observatory(observatory_id):
     db.session.commit()
     flash(u'Observatoire supprimé avec succès', 'success')
     return redirect(url_for('observatories'))
+
+
+@app.route('/api/elevation')
+def api_elevation():
+    locations = '%s,%s' % (request.args.get('latitude', ''), request.args.get('longitude', ''))
+    response = requests.get('https://maps.googleapis.com/maps/api/elevation/json', params={'locations': locations, 'key': GOOGLE_API_KEY, 'sensor': 'true'})
+    data = response.json()
+    return str(data['results'][0]['elevation'])

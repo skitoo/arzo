@@ -9,3 +9,6 @@ MAIN_MENU = [
     {'target': 'index', 'label': 'Tableau de bord', 'icon': 'fa fa-dashboard', 'activate': ['index']},
     {'target': 'observatories', 'label': 'Observatoires', 'icon': 'fa fa-globe', 'activate': ['observatory', 'observatories', 'new_observatory']}
 ]
+
+
+GOOGLE_API_KEY = 'AIzaSyDtOZ8llJ9-bUVaEulU30KBwIQ6saAeBvI'
