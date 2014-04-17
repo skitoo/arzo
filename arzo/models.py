@@ -11,9 +11,9 @@ class Observatory(db.Model):
     altitude = db.Column(db.Integer, info={'label': 'Altitude', 'info': 'En mètre'})
     longitude = db.Column(db.Float, nullable=False, info={'label': 'Longitude'})
     latitude = db.Column(db.Float, nullable=False, info={'label': 'Latitude'})
-    create_at = db.Column(db.DateTime, default=datetime.utcnow)
+    create_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     update_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
-    selected = db.Column(db.Boolean, nullable=False, default=False, info={'label': u'Sélectionner'})
+    selected = db.Column(db.Boolean, nullable=False, default=False, index=True, info={'label': u'Sélectionner'})
 
     def __str__(self):
         return '<Observatory #%d - %s>' % (self.id, self.name)
@@ -25,7 +25,7 @@ class Observatory(db.Model):
 class Brand(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), nullable=False)
-    create_at = db.Column(db.DateTime, default=datetime.utcnow)
+    create_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     update_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
 
     def __init__(self, name):
@@ -43,7 +43,7 @@ class Eyepiece(db.Model):
     name = db.Column(db.String(60), nullable=False)
     focal = db.Column(db.Integer, nullable=False)
     field_of_view = db.Column(db.Integer, nullable=False)
-    create_at = db.Column(db.DateTime, default=datetime.utcnow)
+    create_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     update_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
     brand_id = db.Column(db.Integer, db.ForeignKey('brand.id'))
     brand = db.relationship('Brand', backref=db.backref('eyepieces', lazy='dynamic'))
@@ -52,7 +52,7 @@ class Eyepiece(db.Model):
 class OpticalAid(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), nullable=False)
-    create_at = db.Column(db.DateTime, default=datetime.utcnow)
+    create_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     update_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
     brand_id = db.Column(db.Integer, db.ForeignKey('brand.id'))
     brand = db.relationship('Brand', backref=db.backref('opticalaids', lazy='dynamic'))
@@ -61,7 +61,7 @@ class OpticalAid(db.Model):
 class TelescopeCategory(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), nullable=False)
-    create_at = db.Column(db.DateTime, default=datetime.utcnow)
+    create_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     update_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
 
 
@@ -70,7 +70,7 @@ class Telescope(db.Model):
     name = db.Column(db.String(60), nullable=False)
     aperture = db.Column(db.Integer, nullable=False)
     focal = db.Column(db.Integer, nullable=False)
-    create_at = db.Column(db.DateTime, default=datetime.utcnow)
+    create_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     update_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
     brand_id = db.Column(db.Integer, db.ForeignKey('brand.id'))
     brand = db.relationship('Brand', backref=db.backref('telescopes', lazy='dynamic'))
@@ -85,7 +85,7 @@ class Telescope(db.Model):
 class Observation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     comment = db.Column(db.Text)
-    create_at = db.Column(db.DateTime, default=datetime.utcnow)
+    create_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     update_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
     telescope_id = db.Column(db.Integer, db.ForeignKey('telescope.id'))
     telescope = db.relationship('Telescope')
