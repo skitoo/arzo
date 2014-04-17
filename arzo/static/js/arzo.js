@@ -42,6 +42,5 @@
         marker.on('dragend', ondragend);
         // set the initial values in the form
         ondragend();
-        updateAltitude();
     });
 })(jQuery);
