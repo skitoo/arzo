@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 
 from flask import render_template, redirect, url_for, flash, request
-from arzo import app, db, cache
+from arzo import app, db
 from arzo.models import Observatory
 from arzo.forms import ObservatoryForm
-from arzo.settings import GOOGLE_API_KEY
+from arzo import services
 
-import requests
 import json
 
 
@@ -93,28 +92,10 @@ def delete_observatory(observatory_id):
 
 @app.route('/api/elevation')
 def api_elevation():
-    locations = '%s,%s' % (request.args.get('latitude', ''), request.args.get('longitude', ''))
-    cached = cache.get('api_elevation#%s' % locations)
-    if cached:
-        return cached
-    else:
-        response = requests.get('https://maps.googleapis.com/maps/api/elevation/json', params={'locations': locations, 'key': GOOGLE_API_KEY, 'sensor': 'true'})
-        data = response.json()
-        data = str(data['results'][0]['elevation'])
-        cache.set('api_elevation#%s' % locations, data)
-    return data
+    return services.get_elevation(request.args.get('latitude', ''), request.args.get('longitude', ''))
 
 
 @app.route('/api/weather')
 def api_weather():
-    lat, lon = request.args.get('latitude', ''), request.args.get('longitude', '')
-    response = requests.get('http://api.openweathermap.org/data/2.5/weather', params={'lat': lat, 'lon': lon, 'lang': 'fr'})
-    data = response.json()
-    data = {
-        'temp': '%.1f' % (data['main']['temp'] - 273.15),
-        'wind_speed': '%.2f' % (data['wind']['speed'] * 3.6),
-        'humidity': '%d' % (data['main']['humidity']),
-        'weather': data['weather'][0]['main'].lower(),
-        'description': data['weather'][0]['description'].title()
-    }
+    data = services.get_weather(request.args.get('latitude', ''), request.args.get('longitude', ''))
     return json.dumps(data)
