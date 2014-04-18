@@ -11,6 +11,7 @@ class Observatory(db.Model):
     altitude = db.Column(db.Integer, info={'label': 'Altitude', 'info': 'En mètre'})
     longitude = db.Column(db.Float, nullable=False, info={'label': 'Longitude'})
     latitude = db.Column(db.Float, nullable=False, info={'label': 'Latitude'})
+    timezone = db.Column(db.String, nullable=False, info={'label': 'Fuseau horaire'})
     create_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     update_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
     selected = db.Column(db.Boolean, nullable=False, default=False, index=True, info={'label': u'Sélectionner'})
