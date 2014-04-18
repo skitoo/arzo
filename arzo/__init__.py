@@ -12,6 +12,7 @@ app = Flask(__name__)
 app.config.from_object(settings)
 cache = Cache(app, config=settings.CACHE_CONFIG)
 db = SQLAlchemy(app)
+logger = app.logger
 
 
 import arzo.forms # noqa
