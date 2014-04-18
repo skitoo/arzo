@@ -6,11 +6,11 @@
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 
         {% block styles %}
-        <link href="{{url_for('static', filename="css/bootstrap.min.css")}}" rel="stylesheet" type="text/css" />
-        <link href="{{url_for('static', filename="css/font-awesome.min.css")}}" rel="stylesheet" type="text/css" />
-        <link href="{{url_for('static', filename="css/ionicons.min.css")}}" rel="stylesheet" type="text/css" />
-        <link href="{{url_for('static', filename="css/meteocons.css")}}" rel="stylesheet" type="text/css" />
-        <link href="{{url_for('static', filename="css/AdminLTE.css")}}" rel="stylesheet" type="text/css" />
+        <link href="{{url_for('static', filename="vendors/css/bootstrap.min.css")}}" rel="stylesheet" type="text/css" />
+        <link href="{{url_for('static', filename="vendors/css/font-awesome.min.css")}}" rel="stylesheet" type="text/css" />
+        <link href="{{url_for('static', filename="vendors/css/ionicons.min.css")}}" rel="stylesheet" type="text/css" />
+        <link href="{{url_for('static', filename="vendors/css/meteocons.css")}}" rel="stylesheet" type="text/css" />
+        <link href="{{url_for('static', filename="vendors/css/AdminLTE.css")}}" rel="stylesheet" type="text/css" />
         <link href="{{url_for('static', filename="css/arzo.css")}}" rel="stylesheet" type="text/css" />
         {% endblock %}
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -22,7 +22,7 @@
     </head>
     <body class="skin-black">
         <header class="header">
-            <a href="index.html" class="logo">
+            <a href="{{url_for('index')}}" class="logo">
                 <!-- Add the class icon to your logo image or logo icon to add the margining -->
                 Arzo
             </a>
@@ -74,8 +74,8 @@
 
         {% block scripts %}
             <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-            <script src="{{url_for('static', filename="js/bootstrap.min.js")}}" type="text/javascript"></script>
-            <script src="{{url_for('static', filename="js/AdminLTE/app.js")}}" type="text/javascript"></script>
+            <script src="{{url_for('static', filename="vendors/js/bootstrap.min.js")}}" type="text/javascript"></script>
+            <script src="{{url_for('static', filename="vendors/js/AdminLTE/app.js")}}" type="text/javascript"></script>
         {% endblock %}
     </body>
 </html>
