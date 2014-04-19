@@ -1,5 +1,9 @@
 
 
+textarea{
+    resize: none;
+}
+
 
 #weather {
     font-size: 10em;
