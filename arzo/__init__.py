@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import division
+from __future__ import division, print_function
 
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
