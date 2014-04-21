@@ -12,7 +12,8 @@ CACHE_CONFIG = {
 
 MAIN_MENU = [
     {'target': 'index', 'label': 'Tableau de bord', 'icon': 'fa fa-dashboard', 'activate': ['index']},
-    {'target': 'observatories', 'label': 'Observatoires', 'icon': 'fa fa-globe', 'activate': ['observatory', 'observatories', 'new_observatory']}
+    {'target': 'observatories', 'label': 'Observatoires', 'icon': 'fa fa-globe', 'activate': ['observatory', 'observatories', 'new_observatory']},
+    {'target': 'brands', 'label': 'Marques', 'icon': 'fa fa-barcode', 'activate': ['brand', 'brands', 'new_brand', 'edit_brand']},
 ]
 
 

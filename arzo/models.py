@@ -25,12 +25,18 @@ class Observatory(db.Model):
 
 class Brand(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(60), nullable=False)
+    name = db.Column(db.String(60), nullable=False, info={'label': u'Nom'})
     create_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     update_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
 
-    def __init__(self, name):
-        self.name = name
+    def count_eyepieces(self):
+        return self.eyepieces.count()
+
+    def count_opticalaids(self):
+        return self.opticalaids.count()
+
+    def count_telescopes(self):
+        return self.telescopes.count()
 
     def __str__(self):
         return '<Brand #%d - %s>' % (self.id, self.name)
