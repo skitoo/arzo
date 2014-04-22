@@ -12,10 +12,12 @@
                     <h4>Nom</h4>
                     {{observatory.name}}
                 </div>
-                <div class="form-group">
-                    <h4>Description</h4>
-                    {{observatory.description|replace('\n', '<br>')|safe}}
-                </div>
+                {% if observatory.description %}
+                    <div class="form-group">
+                        <h4>Description</h4>
+                        {{observatory.description|replace('\n', '<br>')|safe}}
+                    </div>
+                {% endif %}
                 <div class="form-group">
                     {% if observatory.selected %}
                     <i class="fa fa-star"></i>
