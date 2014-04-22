@@ -14,6 +14,7 @@ MAIN_MENU = [
     {'target': 'index', 'label': 'Tableau de bord', 'icon': 'fa fa-dashboard', 'activate': ['index']},
     {'target': 'observatories', 'label': 'Observatoires', 'icon': 'fa fa-globe', 'activate': ['observatory', 'observatories', 'new_observatory']},
     {'target': 'brands', 'label': 'Marques', 'icon': 'fa fa-barcode', 'activate': ['brand', 'brands', 'new_brand', 'edit_brand']},
+    {'target': 'eyepieces', 'label': 'Occulaires', 'icon': 'fa fa-barcode', 'activate': ['eyepieces', 'show_eyepiece', 'new_eyepiece', 'edit_eyepiece']},
 ]
 
 
