@@ -4,19 +4,6 @@ from flask import render_template, redirect, url_for, flash, request
 from arzo import app, db
 from arzo.models import Observatory
 from arzo.forms import ObservatoryForm
-from arzo import services
-
-import json
-
-
-@app.route('/')
-def index():
-    return render_template(
-        'index.html',
-        breadcrumb=[
-            (url_for('index'), 'Accueil')
-        ]
-    )
 
 
 @app.route('/observatories')
@@ -108,14 +95,3 @@ def delete_observatory(observatory_id):
     db.session.commit()
     flash(u'Observatoire supprimé avec succès', 'success')
     return redirect(url_for('observatories'))
-
-
-@app.route('/api/elevation')
-def api_elevation():
-    return services.get_elevation(request.args.get('latitude', ''), request.args.get('longitude', ''))
-
-
-@app.route('/api/weather')
-def api_weather():
-    data = services.get_weather(request.args.get('latitude', ''), request.args.get('longitude', ''))
-    return json.dumps(data)
