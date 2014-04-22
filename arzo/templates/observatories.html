@@ -14,14 +14,17 @@
     {% for observatory in observatories %}
         <tr>
             <td>{{loop.index}}</td>
-            <td><a href="{{url_for('observatory', observatory_id=observatory.id)}}">{{observatory.name}}</a></td>
+            <td><a href="{{url_for('show_observatory', observatory_id=observatory.id)}}">{{observatory.name}}</a></td>
             <th class="text-center">{{observatory.altitude}} m</th>
             <th class="text-center">{{observatory.latitude|round(4)}}</th>
             <th class="text-center">{{observatory.longitude|round(4)}}</th>
             <th class="text-center">{% if observatory.selected %}<i class="fa fa-star"></i>{% endif %}</th>
             <td class="text-center">
-                <a href="{{url_for('delete_observatory', observatory_id=observatory.id)}}" class="btn btn-danger btn-sm">
-                    <i class="fa fa-trash-o"></i> <span>Supprimer</span>
+                <a href="{{url_for('delete_observatory', observatory_id=observatory.id)}}" class="btn btn-danger btn-sm" title="Supprimer">
+                    <i class="fa fa-trash-o"></i>
+                </a>
+                <a href="{{url_for('edit_observatory', observatory_id=observatory.id)}}" class="btn btn-primary btn-sm" title="Editer">
+                    <i class="fa fa-edit"></i>
                 </a>
             </td>
         </tr>

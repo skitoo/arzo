@@ -10,5 +10,5 @@ ModelForm = model_form_factory(Form)
 class ObservatoryForm(ModelForm):
     class Meta:
         model = Observatory
-        exclude = ['update_at']
+        exclude = ['update_at', 'timezone', 'altitude']
 

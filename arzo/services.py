@@ -16,7 +16,7 @@ def get_elevation(latitude, longitude):
         params={'locations': locations, 'key': GOOGLE_API_KEY, 'sensor': 'false'}
     )
     data = response.json()
-    return str(data['results'][0]['elevation'])
+    return int(data['results'][0]['elevation'])
 
 
 @cache.memoize()

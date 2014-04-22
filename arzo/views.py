@@ -33,12 +33,29 @@ def observatories():
     )
 
 
-@app.route('/observatory/<int:observatory_id>', methods=('GET', 'POST'))
-def observatory(observatory_id):
+@app.route('/observatory/<int:observatory_id>')
+def show_observatory(observatory_id):
+    observatory = Observatory.query.get_or_404(observatory_id)
+    return render_template(
+        'show_observatory.html',
+        observatory=observatory,
+        title='Observatoire - %s' % observatory.name,
+        breadcrumb=[
+            (url_for('index'), 'Accueil'),
+            (url_for('observatories'), 'Observatoires'),
+            (url_for('edit_observatory', observatory_id=observatory_id), observatory.name),
+        ]
+    )
+
+
+@app.route('/observatory/<int:observatory_id>/edit', methods=('GET', 'POST'))
+def edit_observatory(observatory_id):
     observatory = Observatory.query.get_or_404(observatory_id)
     form = ObservatoryForm(obj=observatory)
     if form.validate_on_submit():
         form.populate_obj(observatory)
+        observatory.altitude = services.get_elevation(observatory.latitude, observatory.longitude)
+        observatory.timezone = services.get_timezone(observatory.latitude, observatory.longitude)
         db.session.merge(observatory)
         if observatory.selected:
             Observatory.query.filter(Observatory.id != observatory.id).update({Observatory.selected: False})
@@ -52,7 +69,8 @@ def observatory(observatory_id):
         breadcrumb=[
             (url_for('index'), 'Accueil'),
             (url_for('observatories'), 'Observatoires'),
-            (url_for('observatory', observatory_id=observatory_id), observatory.name),
+            (url_for('show_observatory', observatory_id=observatory_id), observatory.name),
+            (None, u'Édition')
         ]
     )
 
@@ -63,6 +81,8 @@ def new_observatory():
     if form.validate_on_submit():
         observatory = Observatory()
         form.populate_obj(observatory)
+        observatory.altitude = services.get_elevation(observatory.latitude, observatory.longitude)
+        observatory.timezone = services.get_timezone(observatory.latitude, observatory.longitude)
         db.session.add(observatory)
         if observatory.selected:
             Observatory.query.filter(Observatory.id != observatory.id).update({Observatory.selected: False})

@@ -4,20 +4,29 @@ textarea{
     resize: none;
 }
 
+textarea.observatory-description{
+    height:305px;
+}
 
-#weather {
+.weather {
     font-size: 10em;
     margin-top: -40px;
     height: 190px;
     text-align: center;
 }
 
-#weather-description{
+.weather-description{
     font-size: 2em;
 }
 
-#map{
+.weather-humidity-icon{
+    margin-left: 4px;
+    margin-right: 2px;
+}
+
+.map{
     margin-bottom: 10px;
+    height:300px;
 }
 
 .weather-infos{

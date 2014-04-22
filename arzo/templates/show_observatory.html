@@ -1,0 +1,91 @@
+{% extends "base_observatory.html" %}
+
+{% block content %}
+<div class="row" id="observatory" data-latitude="{{observatory.latitude}}" data-longitude="{{observatory.longitude}}">
+    <div class="col-md-6">
+        <div class="box box-info">
+            <div class="box-header">
+                <h3 class="box-title">Informations générales</h3>
+            </div>
+            <div class="box-body">
+                <div class="form-group">
+                    <h4>Nom</h4>
+                    {{observatory.name}}
+                </div>
+                <div class="form-group">
+                    <h4>Description</h4>
+                    {{observatory.description|replace('\n', '<br>')|safe}}
+                </div>
+                <div class="form-group">
+                    {% if observatory.selected %}
+                    <i class="fa fa-star"></i>
+                    {% else %}
+                    <i class="fa fa-star-o"></i>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+         <div class="box box-info">
+            <div class="box-header">
+                <h3 class="box-title">Météo actuelle</h3>
+            </div>
+            <div class="box-body">
+                <div class="row" id="weather-content"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="box box-info">
+            <div class="box-header">
+                <h3 class="box-title">Localisation</h3>
+            </div>
+            <div class="box-body">
+                <div id="map" class="map"></div>
+                <dl id="map-legend" class="dl-horizontal" style="display:none;">
+        <dt>Altitude</dt>
+        <dd>{{observatory.altitude}} m</dd>
+        <dt>Latitude</dt>
+        <dd>{{'%.4f'|format(observatory.latitude)}} °</dd>
+        <dt>Longitude</dt>
+        <dd>{{'%.4f'|format(observatory.longitude)}} °</dd>
+    </dl>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{super()}}
+<script src="{{url_for('static', filename='vendors/handlebars/handlebars.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/arzo-observatory-show.js')}}"></script>
+{% endblock %}
+
+{% block templates %}
+{% raw %}
+<script id="weather-template" type="text/x-handlebars-template">
+    <div class="col-md-4">
+        <div class="weather meteocon meteocon-{{weather}}"></div>
+    </div>
+    <div class="col-md-8">
+        <div class="weather-description">{{description}}</div>
+        <div class="weather-infos">
+            <span class="meteocon meteocon-thermometer"></span>
+            <span class="weather-infos-label">Température :</span>
+            <span>{{temp}} °C</span>
+        </div>
+        <div class="weather-infos">
+            <span class="meteocon meteocon-compas"></span>
+            <span class="weather-infos-label">Vent :</span>
+            <span>{{wind_speed}} km/h</span>
+        </div>
+        <div class="weather-infos">
+            <span class="weather-humidity-icon fa fa-tint"></span>
+            <span class="weather-infos-label">Humidité :</span>
+            <span>{{humidity}} %</span>
+        </div>
+    </div>
+</script>
+
+{% endraw %}
+{% endblock %}
