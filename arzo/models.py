@@ -4,6 +4,21 @@ from arzo import db
 from datetime import datetime
 
 
+DIAMETERS_EYEPIECE_LIST = (
+    (31.75, '31.75 mm'),
+    (50.8, '50.8 mm'),
+)
+
+TELESCOPE_CATEGORY_LIST = (
+    (1, 'Lunette'),
+    (2, 'Newton'),
+    (3, 'Schmidt-Cassegrain'),
+    (4, 'Ritchey-Chrétien'),
+    (5, 'Maksutov-Cassegrain'),
+    (6, 'Dobson'),
+)
+
+
 class Observatory(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False, info={'label': 'Nom'})
@@ -45,12 +60,6 @@ class Brand(db.Model):
         return str(self)
 
 
-DIAMETERS_EYEPIECE_LIST = (
-    (31.75, '31.75 mm'),
-    (50.8, '50.8 mm'),
-)
-
-
 class Eyepiece(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), nullable=False, info={'label': u'Nom'})
@@ -61,12 +70,6 @@ class Eyepiece(db.Model):
     update_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
     brand_id = db.Column(db.Integer, db.ForeignKey('brand.id'), info={'label': 'Marque'})
     brand = db.relationship(Brand, backref=db.backref('eyepieces'))
-
-    def __init__(self, name=None, focal=None, field_of_view=None, diameter=None):
-        self.name = name
-        self.focal = focal
-        self.field_of_view = field_of_view
-        self.diameter = diameter
 
     def __str__(self):
         return u'<Eyepiece #%d - %s - %s mm - %s° - %s mm - %s>' % (
@@ -91,13 +94,6 @@ class OpticalAid(db.Model):
     brand = db.relationship('Brand', backref=db.backref('opticalaids', lazy='dynamic'))
 
 
-class TelescopeCategory(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(60), nullable=False)
-    create_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
-    update_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
-
-
 class Telescope(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), nullable=False)
@@ -107,8 +103,7 @@ class Telescope(db.Model):
     update_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
     brand_id = db.Column(db.Integer, db.ForeignKey('brand.id'))
     brand = db.relationship('Brand', backref=db.backref('telescopes', lazy='dynamic'))
-    telescope_category_id = db.Column(db.Integer, db.ForeignKey('telescope_category.id'))
-    telescope_category = db.relationship('TelescopeCategory', backref=db.backref('telescopes', lazy='dynamic'))
+    category = db.Column(db.Integer, nullable=False, info={'label': u'Catégorie', 'choices': TELESCOPE_CATEGORY_LIST})
 
     @property
     def focal_ratio(self):
