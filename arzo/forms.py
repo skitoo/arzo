@@ -3,7 +3,7 @@
 from flask.ext.wtf import Form
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms_alchemy import model_form_factory
-from arzo.models import Observatory, Brand, Eyepiece
+from arzo.models import Observatory, Brand, Eyepiece, Telescope
 from arzo import db
 
 
@@ -26,4 +26,11 @@ class EyepieceForm(ModelForm):
     class Meta:
         model = Eyepiece
         exclude = ['update_at']
-    brand = QuerySelectField(get_label='name', query_factory=lambda: db.session.query(Brand))
+    brand = QuerySelectField(get_label='name', query_factory=lambda: db.session.query(Brand), label='Marque')
+
+
+class TelescopeForm(ModelForm):
+    class Meta:
+        model = Telescope
+        exclude = ['update_at']
+    brand = QuerySelectField(get_label='name', query_factory=lambda: db.session.query(Brand), label='Marque')
