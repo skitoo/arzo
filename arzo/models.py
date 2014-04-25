@@ -68,18 +68,11 @@ class Eyepiece(db.Model):
     diameter = db.Column(db.Float, nullable=False, info={'label': u'Diamètre', 'choices': DIAMETERS_EYEPIECE_LIST})
     create_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     update_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
-    brand_id = db.Column(db.Integer, db.ForeignKey('brand.id'), info={'label': 'Marque'})
+    brand_id = db.Column(db.Integer, db.ForeignKey('brand.id'))
     brand = db.relationship(Brand, backref=db.backref('eyepieces'))
 
     def __str__(self):
-        return u'<Eyepiece #%d - %s - %s mm - %s° - %s mm - %s>' % (
-            self.id if self.id else 0,
-            self.name,
-            self.focal,
-            self.field_of_view,
-            self.diameter,
-            self.brand_id
-        )
+        return u'<Eyepiece #%d - %s>' % (self.id if self.id else 0, self.name)
 
     def __repr__(self):
         return str(self)
