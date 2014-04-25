@@ -30,13 +30,13 @@ class Brand(db.Model):
     update_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
 
     def count_eyepieces(self):
-        return self.eyepieces.count()
+        return Eyepiece.query.filter(Eyepiece.brand_id == self.id).count()
 
     def count_opticalaids(self):
-        return self.opticalaids.count()
+        return OpticalAid.query.filter(OpticalAid.brand_id == self.id).count()
 
     def count_telescopes(self):
-        return self.telescopes.count()
+        return Telescope.query.filter(Telescope.brand_id == self.id).count()
 
     def __str__(self):
         return '<Brand #%d - %s>' % (self.id, self.name)
@@ -45,15 +45,41 @@ class Brand(db.Model):
         return str(self)
 
 
+DIAMETERS_EYEPIECE_LIST = (
+    (31.75, '31.75 mm'),
+    (50.8, '50.8 mm'),
+)
+
+
 class Eyepiece(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(60), nullable=False)
-    focal = db.Column(db.Integer, nullable=False)
-    field_of_view = db.Column(db.Integer, nullable=False)
+    name = db.Column(db.String(60), nullable=False, info={'label': u'Nom'})
+    focal = db.Column(db.Integer, nullable=False, info={'label': u'Longueur focale'})
+    field_of_view = db.Column(db.Integer, nullable=False, info={'label': u'Champ de vision'})
+    diameter = db.Column(db.Float, nullable=False, info={'label': u'Diamètre', 'choices': DIAMETERS_EYEPIECE_LIST})
     create_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     update_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
-    brand_id = db.Column(db.Integer, db.ForeignKey('brand.id'))
-    brand = db.relationship('Brand', backref=db.backref('eyepieces', lazy='dynamic'))
+    brand_id = db.Column(db.Integer, db.ForeignKey('brand.id'), info={'label': 'Marque'})
+    brand = db.relationship(Brand, backref=db.backref('eyepieces'))
+
+    def __init__(self, name=None, focal=None, field_of_view=None, diameter=None):
+        self.name = name
+        self.focal = focal
+        self.field_of_view = field_of_view
+        self.diameter = diameter
+
+    def __str__(self):
+        return u'<Eyepiece #%d - %s - %s mm - %s° - %s mm - %s>' % (
+            self.id if self.id else 0,
+            self.name,
+            self.focal,
+            self.field_of_view,
+            self.diameter,
+            self.brand_id
+        )
+
+    def __repr__(self):
+        return str(self)
 
 
 class OpticalAid(db.Model):

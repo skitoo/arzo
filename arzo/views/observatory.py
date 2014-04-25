@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from flask import render_template, redirect, url_for, flash, request
-from arzo import app, db
+from flask import render_template, redirect, url_for, flash
+from arzo import app, db, services
 from arzo.models import Observatory
 from arzo.forms import ObservatoryForm
 

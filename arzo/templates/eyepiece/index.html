@@ -1,4 +1,36 @@
 {% extends "base.html" %}
 
 {% block content %}
+<table class="table table-hover">
+    <tr>
+        <th style="width:20px;">#</th>
+        <th style="width:45%;">Nom</th>
+        <th style="width:15%;" class="text-center">Longueur focale</th>
+        <th style="width:15%;" class="text-center">Champ de vision</th>
+        <th style="width:15%;" class="text-center">Diamètre</th>
+        <th style="width:15%;" class="text-center">Marque</th>
+        <th style="width:10%;" class="text-center">Actions</th>
+    </tr>
+    {% for eyepiece in eyepieces %}
+        <tr>
+            <td>{{loop.index}}</td>
+            <td><a href="{{url_for('show_eyepiece', eyepiece_id=eyepiece.id)}}">{{eyepiece.name}}</a></td>
+            <td class="text-center">{{eyepiece.focal}} mm</td>
+            <td class="text-center">{{eyepiece.field_of_view}} °</td>
+            <td class="text-center">{{eyepiece.diameter}} mm</td>
+            <td class="text-center">{{eyepiece.brand.name}}</td>
+            <td class="text-center">
+                <a href="{{url_for('delete_eyepiece', eyepiece_id=eyepiece.id)}}" class="btn btn-danger btn-sm">
+                    <i class="fa fa-trash-o"></i>
+                </a>
+                <a href="{{url_for('edit_eyepiece', eyepiece_id=eyepiece.id)}}" class="btn btn-primary btn-sm">
+                    <i class="fa fa-edit"></i>
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+<div>
+    <a href="{{url_for('new_eyepiece')}}" class="btn btn-primary"><i class="fa fa-plus"></i> Nouvel occulaire</a>
+</div>
 {% endblock %}

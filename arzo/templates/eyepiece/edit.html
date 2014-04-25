@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+
 {% block content %}
 {% if form.errors %}    
     <div class="alert alert-danger alert-dismissable">
@@ -23,6 +24,22 @@
                     <div class="form-group">
                         {{form.name.label}}
                         {{form.name(class_="form-control")}}
+                    </div>
+                    <div class="form-group">
+                        {{form.focal.label}}
+                        {{form.focal(class_="form-control")}}
+                    </div>
+                    <div class="form-group">
+                        {{form.field_of_view.label}}
+                        {{form.field_of_view(class_="form-control")}}
+                    </div>
+                    <div class="form-group">
+                        {{form.diameter.label}}
+                        {{form.diameter(class_="form-control")}}
+                    </div>
+                    <div class="form-group">
+                        {{form.brand.label}}
+                        {{form.brand(class_="form-control")}}
                     </div>
                 </div>
             </div>

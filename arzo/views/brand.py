@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from flask import render_template, redirect, url_for, flash, request
+from flask import render_template, redirect, url_for, flash
 from arzo import app, db
-from arzo.models import Observatory, Brand
-from arzo.forms import ObservatoryForm, BrandForm
+from arzo.models import Brand
+from arzo.forms import BrandForm
 
 
 @app.route('/brands')
