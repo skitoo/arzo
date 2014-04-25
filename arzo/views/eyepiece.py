@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from flask import render_template, url_for, redirect, flash
-from arzo import app, db, logger
+from arzo import app, db
 from arzo.models import Eyepiece
 from arzo.forms import EyepieceForm
 
@@ -43,6 +43,7 @@ def new_eyepiece():
         form.populate_obj(eyepiece)
         db.session.add(eyepiece)
         db.session.commit()
+        flash(u'Occulaire sauvegardé avec succès', 'success')
         return redirect(url_for('eyepieces'))
     return render_template(
         'eyepiece/edit.html',
