@@ -15,6 +15,6 @@ db = SQLAlchemy(app)
 logger = app.logger
 
 
-import arzo.forms # noqa
-import arzo.models # noqa
-import arzo.views # noqa
+import arzo.forms  # noqa
+import arzo.models  # noqa
+import arzo.views  # noqa
